@@ -6,4 +6,9 @@ export interface Anime {
 export interface Episode {
   id: string,
   episodeNumber: number,
-}
+};
+
+export interface RecentUpload {
+  anime: Anime,
+  episode: Episode,
+};
