@@ -12,8 +12,10 @@ const formatToAnime = (htmlElement: HTMLElement) => {
   } as Anime
 };
 
-export const search = async(keyword: string, page: number = 1) => {
+const searchForAnime = async(keyword: string, page: number = 1) => {
   const response = await gogoanimeClient.get(`/search.html?keyword=${keyword}&page=${page}`);
   const root = parse(response.data as string);
   return root.querySelectorAll('.items > li > .name > a').map(formatToAnime);
 };
+
+export default searchForAnime;

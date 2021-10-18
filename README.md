@@ -7,9 +7,15 @@
 
 > A node.js based CLI to enjoy your favourite anime. Inspired by pystardust's great work (pystardust/ani-cli).
 
+[Features](#features) |
 [Requirements](#requirements) |
 [Installation](#installation) |
 [License](#license)
+
+## Features
+
+- Stay up to date with the most recently uploaded anime
+- Browse and search for a specific anime series
 
 ## Requirements
 
