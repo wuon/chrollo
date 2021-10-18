@@ -1,8 +1,11 @@
 {
   "name": "chrollo",
-  "version": "1.0.0",
+  "repository": "git://github.com/Wuon/chrollo.git",
+  "version": "1.0.1",
   "description": "a node.js based CLI to watch anime.",
-  "main": "index.js",
+  "bin": {
+    "chrollo": "./lib/index.js"
+  },
   "scripts": {
     "start": "tsc && node ./lib/index.js",
     "reset": "rm -rf ./node_modules ./package-lock.json && npm install"
