@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
 import ora from "ora";
+import figlet from "figlet";
 import { exec } from "child_process";
 
+import { VERSION } from "./version";
+
 import gogoanimeAPI from "./api/gogoanime";
-import { search, selectAnime } from "./prompts";
-import selectEpisode from "./prompts/selectEpisode";
+import { search, selectAnime, selectEpisode } from "./prompts";
 
 const runCLI = async () => {
   const animeToSearch = await search();
@@ -28,11 +30,17 @@ const runCLI = async () => {
   const loadEpisodeSpinner = ora(`Loading episode ${episode.episodeNumber}`).start();
   const link = await gogoanimeAPI.getEpisode(episode);
   const file = await gogoanimeAPI.getFile(link);
-  loadEpisodeSpinner.succeed(`Sucess! Now playing: ${animeName}`);
+  loadEpisodeSpinner.succeed(`Success! Now playing: ${animeName}`);
 
   const command = `mpv --http-header-fields="Referer: ${link}" "https:${file}"` as any;
 
   exec(command);
 }
 
-runCLI();
+figlet('chrollo', {
+  font: 'Univers',
+}, (_err, data) => {
+  console.log(data);
+  console.log(`Version: ${VERSION}`);
+  runCLI();
+});
