@@ -1,5 +1,8 @@
+![header](./assets/header.png)
+
 # Chrollo
 
+[![NPM version](https://img.shields.io/npm/v/chrollo.svg)](https://www.npmjs.com/package/chrollo)&nbsp;
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > A node.js based CLI to enjoy your favourite anime. Inspired by pystardust's great work (pystardust/ani-cli).
