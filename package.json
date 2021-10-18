@@ -1,0 +1,26 @@
+{
+  "name": "chrollo",
+  "version": "1.0.0",
+  "description": "a node.js based CLI to watch anime.",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node ./lib/index.js",
+    "reset": "rm -rf ./node_modules ./package-lock.json && npm install"
+  },
+  "author": "wuon",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/inquirer": "^8.1.3",
+    "@types/node": "^16.11.1",
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.3.0",
+    "tslint": "^5.12.1",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "axios": "^0.23.0",
+    "inquirer": "^8.2.0",
+    "node-html-parser": "^5.0.0",
+    "ora": "^5.4.1"
+  }
+}
