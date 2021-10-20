@@ -1,19 +1,19 @@
 import inquirer from 'inquirer';
 
-const selectMainAction = async() => {
+const selectMainAction = async () => {
   const choices = [
     {
       name: 'View recently uploaded anime',
-      value: 'recentUploads',
+      value: 'recentUploads'
     },
     {
       name: 'Search for anime',
-      value: 'search',
+      value: 'search'
     },
     {
       name: 'Quit',
-      value: 'quit',
-    },
+      value: 'quit'
+    }
   ];
 
   const answers = await inquirer.prompt([
@@ -21,11 +21,11 @@ const selectMainAction = async() => {
       type: 'list',
       name: 'mainAction',
       message: 'Select an option: ',
-      choices,
-    },
-  ])
+      choices
+    }
+  ]);
 
   return answers.mainAction as string;
-}
+};
 
 export default selectMainAction;

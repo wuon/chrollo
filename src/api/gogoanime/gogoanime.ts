@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 
-const BASE_URL: string = "https://gogoanime.vc";
+const BASE_URL = 'https://gogoanime.vc';
 
 const gogoanimeClient: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL
 });
 
 export default gogoanimeClient;

@@ -1,15 +1,15 @@
-import searchForAnime from "./searchForAnime";
-import getEpisode from "./getEpisode";
-import getEpisodes from "./getEpisodes";
-import getFile from "./getFile";
-import getRecentUploads from "./getRecentUploads";
+import searchForAnime from './searchForAnime';
+import getEpisode from './getEpisode';
+import getEpisodes from './getEpisodes';
+import getFile from './getFile';
+import getRecentUploads from './getRecentUploads';
 
 const gogoanimeAPI = {
   getEpisode,
   getEpisodes,
   getFile,
   getRecentUploads,
-  searchForAnime,
-}
+  searchForAnime
+};
 
 export default gogoanimeAPI;
