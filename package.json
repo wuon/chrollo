@@ -1,7 +1,7 @@
 {
   "name": "chrollo",
   "repository": "git://github.com/Wuon/chrollo.git",
-  "version": "0.2.1",
+  "version": "0.2.0",
   "description": "a node.js based CLI to watch anime.",
   "bin": {
     "chrollo": "./lib/index.js"
