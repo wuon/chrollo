@@ -53,7 +53,7 @@ const installMPVForWindows = async () => {
     const hash = await winDownloadArchive(fileName);
     const valid = await winValidateArchive(fileName, hash);
     if (!valid) {
-      process.exit(1);
+      throw Error('archive hash is invalid');
     }
     await winUnzipArchive(fileName);
   } catch (e) {
