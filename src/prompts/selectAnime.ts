@@ -4,11 +4,11 @@ import { Anime } from '../types';
 const formatChoice = (anime: Anime) => {
   return {
     name: anime.name,
-    value: anime,
+    value: anime
   };
-}
+};
 
-const selectAnime = async(animes: Anime[]) => {
+const selectAnime = async (animes: Anime[]) => {
   const choices = animes.map(formatChoice);
   const answers = await inquirer.prompt([
     {
@@ -17,10 +17,10 @@ const selectAnime = async(animes: Anime[]) => {
       message: 'Select an anime from the list below: ',
       pageSize: 10,
       loop: false,
-      choices,
-    },
+      choices
+    }
   ]);
   return answers.anime as Anime;
-}
+};
 
 export default selectAnime;
