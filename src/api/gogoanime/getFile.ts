@@ -7,7 +7,7 @@ const getFile = async (embeddedURL: string) => {
   const htmlElement = root.querySelector('.videocontent > script');
   const rawScript = htmlElement?.toString() || '';
   const files = rawScript.match(/(?<=sources:\[\{file: 'https:)(.*)(?=',l)/);
-  return files?.pop() || '';
+  return files?.pop() || null;
 };
 
 export default getFile;
