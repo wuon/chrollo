@@ -1,18 +1,19 @@
 import inquirer from 'inquirer';
+import { Action } from '../types';
 
 const selectMainAction = async () => {
   const choices = [
     {
       name: 'View recently uploaded anime',
-      value: 'recentUploads'
+      value: Action.RECENTUPLOADS
     },
     {
       name: 'Search for anime',
-      value: 'search'
+      value: Action.SEARCH
     },
     {
       name: 'Quit',
-      value: 'quit'
+      value: Action.QUIT
     }
   ];
 
@@ -25,7 +26,7 @@ const selectMainAction = async () => {
     }
   ]);
 
-  return answers.mainAction as string;
+  return answers.mainAction as Action;
 };
 
 export default selectMainAction;

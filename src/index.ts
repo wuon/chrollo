@@ -13,7 +13,8 @@ import {
   selectMainAction
 } from './prompts';
 import { gogoanimeAPI } from './api';
-import { Anime, Episode, RecentUpload } from './types';
+import { Anime, Episode, Action, RecentUpload } from './types';
+import { init } from './sections';
 
 const LOGO = `
             88                                    88  88               
@@ -30,35 +31,60 @@ const apiClient = gogoanimeAPI;
 
 const loadEpisodeToMPV = async (episode: Episode, anime: Anime) => {
   const loadEpisodeSpinner = ora(
-    `Loading episode ${episode.episodeNumber}`
+    `[1/3] Loading episode ${episode.episodeNumber}`
   ).start();
   const link = await apiClient.getEpisode(episode);
+  loadEpisodeSpinner.text = '[2/3] Retriveing streaming file...';
   const file = await apiClient.getFile(link);
-  loadEpisodeSpinner.succeed(`Success! Now playing: ${anime.name}`);
+  loadEpisodeSpinner.succeed(
+    `[3/3] Success! Please give mpv a couple seconds to launch.`
+  );
 
   const command = `mpv --http-header-fields="Referer: ${link}" "https:${file}"`;
 
-  exec(command);
+  exec(command, (error) => {
+    if (error) {
+      console.log(error);
+      console.error(
+        'An unexpected error has occured. Please check the stacktrace above for more information.'
+      );
+    }
+  });
 };
 
 const runCLI = async () => {
   console.log(LOGO);
   console.log(`Version: ${VERSION}`);
 
+  await init();
+
   const mainAction = await selectMainAction();
 
-  if (mainAction === 'quit') {
-    return;
+  if (mainAction === Action.RECENTUPLOADS) {
+    const recentUploadsSpinner = ora(`Fetching recent uploads...`).start();
+    const recentUploads = await apiClient.getRecentUploads();
+    recentUploadsSpinner.succeed('Successfully queried for recent uploads.');
+
+    const recentUpload: RecentUpload = await selectRecentUpload(recentUploads);
+    const { episode, anime } = recentUpload;
+
+    loadEpisodeToMPV(episode, anime);
   }
 
-  if (mainAction === 'search') {
-    const animeToSearch = await search();
-
-    const animeSearchSpinner = ora('Fetching anime...').start();
-    const animeSearchResults = await apiClient.searchForAnime(animeToSearch);
-    animeSearchSpinner.succeed(
-      `Successfully queried for results on: ${animeToSearch}`
-    );
+  if (mainAction === Action.SEARCH) {
+    let animeSearchResults: Anime[] = [];
+    do {
+      const animeToSearch = await search();
+      const animeSearchSpinner = ora('Fetching anime...').start();
+      animeSearchResults = await apiClient.searchForAnime(animeToSearch);
+      if (animeSearchResults.length === 0) {
+        animeSearchSpinner.fail('No results found :( Try searching again!');
+      } else {
+        animeSearchSpinner.succeed(
+          `Successfully queried for results on: ${animeToSearch}`
+        );
+      }
+    } while (animeSearchResults.length === 0);
 
     const anime = await selectAnime(animeSearchResults);
 
@@ -74,15 +100,8 @@ const runCLI = async () => {
     loadEpisodeToMPV(episode, anime);
   }
 
-  if (mainAction === 'recentUploads') {
-    const recentUploadsSpinner = ora(`Fetching recent uploads...`).start();
-    const recentUploads = await apiClient.getRecentUploads();
-    recentUploadsSpinner.succeed('Successfully queried for recent uploads.');
-
-    const recentUpload: RecentUpload = await selectRecentUpload(recentUploads);
-    const { episode, anime } = recentUpload;
-
-    loadEpisodeToMPV(episode, anime);
+  if (mainAction === Action.QUIT) {
+    return;
   }
 };
 
