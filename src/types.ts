@@ -20,3 +20,9 @@ export interface ApiClient {
   getRecentUploads(): Promise<RecentUpload[]>;
   searchForAnime(keyword: string, page?: number): Promise<Anime[]>;
 }
+
+export enum Action {
+  RECENTUPLOADS,
+  SEARCH,
+  QUIT
+}
