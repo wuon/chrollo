@@ -4,7 +4,9 @@ import getEpisodes from './getEpisodes';
 import getFile from './getFile';
 import getRecentUploads from './getRecentUploads';
 
-const gogoanimeAPI = {
+import { ApiClient } from '../../types';
+
+const gogoanimeAPI: ApiClient = {
   getEpisode,
   getEpisodes,
   getFile,

@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Prettier and eslint integration to keep styling consistent between workspaces
+- Added ApiClient type. This should pave the road to begin adding additional scrapers from different anime sites
+
+### Removed
+
+- Figlet npm package, opted to instead just print raw test to reduce package size. (Don't think it makes sense to use figlet just for 1 aspect of the code)
 
 ## [0.2.0] - 2021-10-18
 
