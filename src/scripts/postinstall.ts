@@ -6,24 +6,24 @@ import {
   ΘinstallationCompleted,
   ΘmpvNotFoundWarning,
   ΘautoInstallNotSupported,
-  ΘautoInstallFailed,
+  ΘautoInstallFailed
 } from './lib/prompts';
 import {
   winDownloadArchive,
   winUnzipArchive,
-  winValidateArchive,
+  winValidateArchive
 } from './lib/windows';
 
 const main = async () => {
   // Since we only implemented automatic binary installation for windows
   // ignore the other platforms for now
-  if (os.platform() === 'win32' && !commandExists.sync('mpv')) {
+  if (os.platform() === 'win32' && !commandExists.sync('mpv --version')) {
     const { shouldInstall } = await inquirer.prompt([
       {
         type: 'confirm',
         name: 'shouldInstall',
-        message: `You don't have mpv installed, would you like Chrollo to automatically install it for you?`,
-      },
+        message: `You don't have mpv installed, would you like Chrollo to automatically install it for you?`
+      }
     ]);
     if (shouldInstall) {
       await installMPVBinary();

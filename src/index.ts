@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import ora from 'ora';
+import fs from 'fs';
+import os from 'os';
 import { exec } from 'child_process';
 
 import VERSION from './version';
@@ -40,7 +42,13 @@ const loadEpisodeToMPV = async (episode: Episode, anime: Anime) => {
     `[3/3] Success! Please give mpv a couple seconds to launch.`
   );
 
-  const command = `mpv --http-header-fields="Referer: ${link}" "https:${file}"`;
+  let binary = 'mpv';
+
+  if (fs.existsSync('./bin') && os.platform() === 'win32') {
+    binary = '.\\bin\\mpv.exe';
+  }
+
+  const command = `${binary} --http-header-fields="Referer: ${link}" "https:${file}"`;
 
   exec(command, (error) => {
     if (error) {

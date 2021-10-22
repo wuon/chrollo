@@ -11,7 +11,7 @@
     "build": "npm run lint && tsc",
     "start": "tsc && node ./lib/index.js",
     "clean": "rm -rf ./node_modules ./package-lock.json && npm install",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "postinstall": "node ./lib/scripts/postinstall.js"
   },
   "author": "wuon",
@@ -36,6 +36,7 @@
     "7zip-min": "^1.4.0",
     "axios": "^0.23.0",
     "chalk": "^4.1.2",
+    "command-exists": "^1.2.9",
     "figlet": "^1.5.2",
     "got": "^11.8.2",
     "inquirer": "^8.2.0",
