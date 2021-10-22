@@ -17,7 +17,11 @@ import {
 const main = async () => {
   // Since we only implemented automatic binary installation for windows
   // ignore the other platforms for now
-  if (os.platform() === 'win32' && !commandExists.sync('mpv --version')) {
+  const supportedPlatforms = new Set(['win32']);
+  if (
+    supportedPlatforms.has(os.platform()) &&
+    !commandExists.sync('mpv --version')
+  ) {
     const { shouldInstall } = await inquirer.prompt([
       {
         type: 'confirm',
