@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Prettier and eslint integration to keep styling consistent between workspaces
 - Added ApiClient type. This should pave the road to begin adding additional scrapers from different anime sites
 - Added check during initialization to check if `mpv` has been installed on the user's system
+- Automated mpv installation on windows, established the pipeline for future platforms
 
 ### Removed
 
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - If no search results were found, re-prompt the user for a new search query
+- fixed chrollo mpv not exist error reporting on windows
 
 ## [0.2.0] - 2021-10-18
 

@@ -1,2 +1,5 @@
-lib
+/lib
+/bin
 node_modules
+
+*.7z
