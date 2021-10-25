@@ -3,10 +3,10 @@ import commandExists from 'command-exists';
 import inquirer from 'inquirer';
 
 import {
-  ΘinstallationCompleted,
-  ΘmpvNotFoundWarning,
-  ΘautoInstallNotSupported,
-  ΘautoInstallFailed
+  installationCompleted,
+  mpvNotFoundWarning,
+  autoInstallNotSupported,
+  autoInstallFailed
 } from './lib/prompts';
 import {
   winDownloadArchive,
@@ -32,9 +32,9 @@ const main = async () => {
     if (shouldInstall) {
       await installMPVBinary();
     } else {
-      console.log(ΘmpvNotFoundWarning);
+      console.log(mpvNotFoundWarning);
     }
-    console.log(ΘinstallationCompleted);
+    console.log(installationCompleted);
   }
 };
 
@@ -47,7 +47,7 @@ const installMPVBinary = async () => {
     case 'darwin':
     case 'linux':
     default:
-      console.log(ΘautoInstallNotSupported);
+      console.log(autoInstallNotSupported);
   }
 };
 
@@ -61,7 +61,7 @@ const installMPVForWindows = async () => {
     }
     await winUnzipArchive(fileName);
   } catch (e) {
-    console.log(ΘautoInstallFailed);
+    console.log(autoInstallFailed);
   }
 };
 

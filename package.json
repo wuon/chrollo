@@ -12,7 +12,7 @@
     "start": "tsc && node ./lib/index.js",
     "clean": "rm -rf ./node_modules ./package-lock.json && npm install",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "postinstall": "node ./lib/scripts/postinstall.js"
+    "postinstall": "npm run build && node ./lib/scripts/postinstall.js"
   },
   "author": "wuon",
   "license": "MIT",
@@ -37,7 +37,6 @@
     "axios": "^0.23.0",
     "chalk": "^4.1.2",
     "command-exists": "^1.2.9",
-    "figlet": "^1.5.2",
     "got": "^11.8.2",
     "inquirer": "^8.2.0",
     "node-html-parser": "^5.0.0",
