@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added ApiClient type. This should pave the road to begin adding additional scrapers from different anime sites
 - Added check during initialization to check if `mpv` has been installed on the user's system
 - Automated mpv installation on windows, established the pipeline for future platforms
+- Added mpv JSON IPC support
+- Loading animation will now complete once the file has been loaded
 
 ### Removed
 

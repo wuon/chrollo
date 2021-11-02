@@ -1,9 +1,9 @@
 import commandExists from 'command-exists';
 import fs from 'fs';
+import mpv from '../mpv';
 
 const isMPVInstalled = async () => {
-  const exists =
-    (await commandExists.sync('mpv --version')) || fs.existsSync('./bin');
+  const exists = (await commandExists.sync('mpv')) || fs.existsSync('./bin');
   if (!exists) {
     console.log(
       "Looks like you don't have mpv installed. You will need it to run chrollo!"
@@ -17,6 +17,8 @@ const init = async () => {
   if (!isMPVInstalled()) {
     process.exit(1);
   }
+
+  mpv();
 };
 
 export default init;
