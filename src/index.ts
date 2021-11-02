@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 
 import ora from 'ora';
-import fs from 'fs';
-import os from 'os';
-import { exec } from 'child_process';
 
 import VERSION from './version';
 
@@ -17,6 +14,7 @@ import {
 import { gogoanimeAPI } from './api';
 import { Anime, Episode, Action, RecentUpload } from './types';
 import { init } from './sections';
+import mpv from './mpv';
 
 const LOGO = `
             88                                    88  88               
@@ -33,31 +31,30 @@ const apiClient = gogoanimeAPI;
 
 const loadEpisodeToMPV = async (episode: Episode, anime: Anime) => {
   const loadEpisodeSpinner = ora(
-    `[1/3] Loading episode ${episode.episodeNumber}`
+    `[1/4] Loading episode ${episode.episodeNumber}`
   ).start();
   const link = await apiClient.getEpisode(episode);
-  loadEpisodeSpinner.text = '[2/3] Retriveing streaming file...';
+  loadEpisodeSpinner.text = '[2/4] Retriveing streaming file...';
   const file = await apiClient.getFile(link);
-  loadEpisodeSpinner.succeed(
-    `[3/3] Success! Please give mpv a couple seconds to launch.`
-  );
+  loadEpisodeSpinner.text = '[3/4] Setting up mpv...';
 
-  let binary = 'mpv';
+  mpv().socket.on('mpv:file-loaded', () => {
+    loadEpisodeSpinner.succeed(
+      `[4/4] Success! Now playing episode ${episode.episodeNumber} from: ${anime.name}`
+    );
+    mpv().socket.removeAllListeners('mpv:file-loaded');
+  });
 
-  if (fs.existsSync('./bin') && os.platform() === 'win32') {
-    binary = '.\\bin\\mpv.exe';
-  }
-
-  const command = `${binary} --http-header-fields="Referer: ${link}" "https:${file}"`;
-
-  exec(command, (error) => {
-    if (error) {
-      console.log(error);
+  if (file) {
+    try {
+      await mpv().play(link, `https:${file}`);
+    } catch (e) {
+      console.log(e);
       console.error(
         'An unexpected error has occured. Please check the stacktrace above for more information.'
       );
     }
-  });
+  }
 };
 
 const runCLI = async () => {
@@ -76,7 +73,7 @@ const runCLI = async () => {
     const recentUpload: RecentUpload = await selectRecentUpload(recentUploads);
     const { episode, anime } = recentUpload;
 
-    loadEpisodeToMPV(episode, anime);
+    await loadEpisodeToMPV(episode, anime);
   }
 
   if (mainAction === Action.SEARCH) {
@@ -105,10 +102,11 @@ const runCLI = async () => {
     const episodeNumber = await selectEpisode(episodes.length);
     const episode = episodes[episodeNumber - 1];
 
-    loadEpisodeToMPV(episode, anime);
+    await loadEpisodeToMPV(episode, anime);
   }
 
   if (mainAction === Action.QUIT) {
+    mpv().kill();
     return;
   }
 };
