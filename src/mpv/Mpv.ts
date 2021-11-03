@@ -3,15 +3,18 @@ import { Socket } from 'net';
 
 import MpvSocket from './MpvSocket';
 
-const ipcServer = '/tmp/chrollo.sock';
-const ARGS = [`--input-ipc-server=${ipcServer}`, '--no-config', '--idle=yes'];
-
 class Mpv {
   private childProcess: ChildProcessWithoutNullStreams;
   private mpvSocket: MpvSocket;
 
-  constructor(binary: string) {
-    this.childProcess = spawn(binary, ARGS);
+  constructor(binary: string, ipcServer: string) {
+    const args = [
+      `--input-ipc-server=${ipcServer}`,
+      '--no-config',
+      '--idle=yes'
+    ];
+
+    this.childProcess = spawn(binary, args);
 
     process.on('exit', () => this.kill());
 
